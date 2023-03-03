@@ -29,6 +29,12 @@
   register: project_folder_paths
   loop: "{{ project.project_copy_folders | default(project_copy_folders) }}"
 
+- name: What are these folders
+  ansible.builtin.debug:
+    msg:
+    - "Current project path: {{ deploy_helper.current_path }}"
+    - "Release project path: {{ deploy_helper.new_release_path }}"
+
 - name: Copy project folders
   copy:
     src: "{{ deploy_helper.current_path }}/{{ item.item }}/"

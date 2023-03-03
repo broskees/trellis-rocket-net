@@ -60,12 +60,15 @@ composer_classmap_authoritative: true
 project: "{{ wordpress_sites[site] }}"
 project_root: "{{ www_root }}/{{ site }}"
 project_local_path: "{{ (lookup('env', 'USER') == 'vagrant') | ternary(project_root + '/' + project_current_path, project.local_path) }}"
-project_public_path: "{{ project.public_path | default('web') }}"
+project_public_path: "{{ project.public_path | default('public_html') }}"
 project_upload_path: "{{ project.upload_path | default('app/uploads') }}"
 
 
 # Deploy hooks
 # For list of hooks and explanation, see https://roots.io/trellis/docs/deploys/#hooks
+deploy_initialize_before:
+  - "{{ playbook_dir }}/deploy-hooks/initialize-before.yml"
+
 deploy_build_before:
   - "{{ playbook_dir }}/deploy-hooks/build-before.yml"
 
